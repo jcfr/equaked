@@ -1,0 +1,39 @@
+#! /bin/bash
+
+# This file is part of Equaked.
+
+# Equaked is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# any later version.
+
+# Equaked is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with Foobar; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+# MODIFY THE FOLLOWING LINE to set the path to your e-puck directory (containing the development tree and the tools)
+export EPUCKBASEPATH=/home/fillion/si_project/code/Epuck
+
+# Setting up paths
+export PATH=$EPUCKBASEPATH/Tools:$PATH
+export PATH=/net/icitnab1/vol/src/lin/distrib/swis/pic30-elf:/net/icitnab1/vol/src/lin/distrib/swis/pic30-elf/pic30-elf:$PATH
+
+# Make sure the libraries are compiled
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/a_d
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/a_d/advance_ad_scan
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/codec
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/I2C
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/motor_led
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/uart
+
+# Colored shell
+export PS1="\[\e[34m\]\u@\h:\w> \[\e[0m\]"
+
+# Use the bash terminal
+exec bash -l
+
