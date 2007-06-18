@@ -1,0 +1,23 @@
+#! /bin/bash
+
+# MODIFY THE FOLLOWING LINE to set the path to your e-puck directory (containing the development tree and the tools)
+export EPUCKBASEPATH=/home/fillion/si_project/code/Epuck
+
+# Setting up paths
+export PATH=$EPUCKBASEPATH/Tools:$PATH
+export PATH=/net/icitnab1/vol/src/lin/distrib/swis/pic30-elf:/net/icitnab1/vol/src/lin/distrib/swis/pic30-elf/pic30-elf:$PATH
+
+# Make sure the libraries are compiled
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/a_d
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/a_d/advance_ad_scan
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/codec
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/I2C
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/motor_led
+make -C $EPUCKBASEPATH/EpuckDevelopmentTree/library/uart
+
+# Colored shell
+export PS1="\[\e[34m\]\u@\h:\w> \[\e[0m\]"
+
+# Use the bash terminal
+exec bash -l
+

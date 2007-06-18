@@ -1,0 +1,64 @@
+#!/bin/bash
+
+supervisor="./../supervisor2/supervisor2"
+preprocess="./../data_preprocessing/preprocess"
+matlab_scripts="./matlab/*"
+process="./scripts/process-TEMPLATE"
+
+#Ask user an experiment number/name
+echo "[INPUT] Enter an experiment identifier, then press <ENTER>." 
+read expid
+
+echo "Match the robot id with the layout below.";
+echo
+echo " (station1)";
+echo "¦          ---";
+echo "¦             ---";
+echo "¦                ---";
+echo "¦                   ---";
+echo "¦                      ---";
+echo "¦                         ---";
+echo "¦                            ---";
+echo "¦                               ---";
+echo "(station 2)---------------(station3)-";
+
+#Ask user an experiment number/name
+echo "[INPUT] Enter station1 ID (should be an integer), then press <ENTER>." 
+read station1
+
+echo "[INPUT] Enter station1 ID (should be an integer), then press <ENTER>."
+read station2
+ 
+echo "[INPUT] Enter station1 ID (should be an integer), then press <ENTER>."
+read station3 
+
+#create directory name
+dirname="./experiment$expid"
+
+#check if the directory exists
+if [ -e "$dirname" ]
+then
+	echo "[ERROR] Directory '$dirname' already exists.";echo
+	exit
+fi
+
+#make experiment directory
+mkdir $dirname
+
+`cp $supervisor $dirname`
+`cp $preprocess $dirname`
+`cp $matlab_scripts $dirname`
+
+#preprocess compute_tdoa-TEMPLATE
+
+#preprocess the process script
+sed -e "s/_STATION1_/$station1/g" -e "s/_STATION2_/$station2/g" -e "s/_STATION3_/$station3/g" $process > "$dirname/process"
+chmod 0700 "$dirname/process"
+
+echo "[SUCCESS] Necessary files copied into '$dirname' directory.";
+echo "          As soon as E-Pucks detect a shock,"
+echo "          Run '$dirname/process' ";echo
+
+
+echo "OK"
+

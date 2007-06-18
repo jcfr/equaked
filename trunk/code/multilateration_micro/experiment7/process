@@ -1,0 +1,23 @@
+#!/bin/bash
+
+station1=58
+station2=57
+station3=70
+
+supervisor="./supervisor2"
+preprocess="./preprocess"
+
+#collect data from each E-Puck
+$supervisor $station1 $station2 $station3
+
+#preprocess files
+$preprocess $station1
+$preprocess $station2
+$preprocess $station3
+
+#preprocess matlab file
+sed -e "s/#STATION1#/$station1/g" -e "s/#STATION2#/$station2/g" -e "s/#STATION3#/$station3/g" compute_tdoa-TEMPLATE.m > compute_tdoa.m
+
+#launch matlab scripts
+#`matlab -nojvm plot_multilateration`
+
